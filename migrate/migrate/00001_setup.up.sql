@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS todos (
 CREATE TABLE IF NOT EXISTS subs (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     name VARCHAR(255),
-    todo_id uuid references todos(id)
+    todo_id uuid references todos(id) ON DELETE CASCADE
 );

@@ -8,8 +8,9 @@ MIGRATION_DIR=./migrate/migrate
 SEEDERS_DIR=./migrate/seeders
 # Default number of migration(s)
 N = 1
-# Migration schema version
+# Last migration schema version
 V = 1
+CUR_VER=1
 
 migrate-create:
 	migrate create -ext sql -dir $(MIGRATION_DIR) -seq -digits 5 $(NAME)
@@ -30,13 +31,14 @@ seeders-create:
 	migrate create -ext sql -dir $(SEEDERS_DIR) -seq -digits 5 $(NAME)
 
 seeders-up:
+	migrate -source file://$(SEEDERS_DIR) -database $(DB_URL) force 0
 	migrate -source file://$(SEEDERS_DIR) -database $(DB_URL) up
-
-seeders-force:
-	migrate -source file://$(SEEDERS_DIR) -database $(DB_URL) force $(V)
+	migrate -source file://$(SEEDERS_DIR) -database $(DB_URL) force $(CUR_VER)
 
 seeders-down:
+	migrate -source file://$(SEEDERS_DIR) -database $(DB_URL) force 1
 	migrate -source file://$(SEEDERS_DIR) -database $(DB_URL) down
+	migrate -source file://$(SEEDERS_DIR) -database $(DB_URL) force $(CUR_VER)
 
 drop-db:
 	migrate -source file://$(MIGRATION_DIR) -database $(DB_URL) drop -f
