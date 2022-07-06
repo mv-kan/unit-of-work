@@ -3,7 +3,6 @@ module github.com/mv-kan/unit-of-work
 go 1.18
 
 require (
-	github.com/gofrs/uuid v4.0.0+incompatible
 	github.com/google/uuid v1.3.0
 	gorm.io/driver/postgres v1.3.7
 	gorm.io/gorm v1.23.7
