@@ -3,7 +3,7 @@ package entity
 import "github.com/google/uuid"
 
 type Sub struct {
-	ID     uuid.UUID `gorm:"type:uuid;primary_key;"`
+	Base
 	Name   string
 	TodoID uuid.UUID
 }
