@@ -28,15 +28,20 @@ type UnitOfWork interface {
 	Do(fn UnitOfWorkBlock) error
 }
 
+func New(db *gorm.DB) UnitOfWork {
+	return &unitOfWork{db: db}
+}
+
 type unitOfWork struct {
 	db *gorm.DB
 }
 
 func (uow *unitOfWork) Do(fn UnitOfWorkBlock) error {
-	tx := uow.db.Begin()
-	newStore := uowStore{
-		todos: repo.NewTodoRepo(tx),
-		users: repo.NewUserRepo(tx),
-	}
-	return fn(&newStore)
+	return uow.db.Transaction(func(tx *gorm.DB) error {
+		newStore := uowStore{
+			todos: repo.NewTodoRepo(tx),
+			users: repo.NewUserRepo(tx),
+		}
+		return fn(&newStore)
+	})
 }
