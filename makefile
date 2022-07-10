@@ -1,7 +1,7 @@
 DB_USER=postgres
-DB_PASSWORD=postgrespw
+DB_PASSWORD=secret
 DB_HOST=localhost
-DB_PORT=49153
+DB_PORT=5432
 DB_NAME=postgres
 DB_URL=postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=disable
 MIGRATION_DIR=./migrate/migrate
@@ -44,4 +44,4 @@ drop-db:
 	migrate -source file://$(MIGRATION_DIR) -database $(DB_URL) drop -f
 
 enter-db:
-	docker exec -it $(CONTAINER_ID) psql -U ${DB_USER}
+	docker exec -it db psql -U ${DB_USER}

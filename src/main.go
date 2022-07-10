@@ -12,11 +12,14 @@ import (
 )
 
 func main() {
-	dsn := "host=localhost user=postgres password=postgrespw dbname=postgres port=49153 sslmode=disable"
+	//dsn := "host=db user=postgres password=secret dbname=postgres port=5432 sslmode=disable"
+	dsn := "host=localhost user=postgres password=secret dbname=postgres port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
+	// auto migrate to create db scheme
+	db.AutoMigrate(&entity.User{}, &entity.Todo{}, &entity.Sub{})
 
 	unitOfWork := uow.New(db)
 	// this function creates user and then creates to user first greeting todo
