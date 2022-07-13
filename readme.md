@@ -25,4 +25,4 @@ In main.go it prints out result of queries so you can see it in the container lo
 
 ## Dependencies
 1. I use migration tool called [migrate](https://github.com/golang-migrate/migrate) the cli version for manual migrations. You can use makefile commands to ease the pain of a new unknown tool. But in main.go there is a piece of code that automatically run migrations so you don't need to install this tool if you are to run this project 
-2. Postgres database (of course) runs as docker container. Dockerfile is located in db folder 
+2. Postgres database runs as docker container. Dockerfile is located in db folder 
